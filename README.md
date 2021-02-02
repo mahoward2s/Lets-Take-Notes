@@ -34,7 +34,7 @@ https://github.com/mahoward2s/Lets-Take-Notes
 Feel free to fork and improve!
 
 ## Tests
-Jest
+N/A
 
 ## Questions?
 - Mahoward2s: https://github.com/mahoward2s
