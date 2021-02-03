@@ -4,10 +4,9 @@ const express = require('express');
 
 // set up the express app
 const app = express();
-const PORT = process.env.PORT || 8080;
 
 //set port
-
+const PORT = process.env.PORT || 8080;
 
 
 
