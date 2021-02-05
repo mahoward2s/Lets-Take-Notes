@@ -2,9 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const storedNotes = require('../db/store');
-
-// API Routes
+//------------------------------------ API Routes-------------------------------------
 
 module.exports = (app) => {
     //sets note variable
@@ -31,6 +29,17 @@ module.exports = (app) => {
             notes.splice(req.params.id, 1);
             updateDb();
             return console.log('Successfully deleted note with id: ' + req.params.id);
+        });
+
+        // ----------------------------------------HTML ROUTES--------------------
+
+        app.get('/notes', (req, res) => {
+            res.sendFile(path.join(__dirname, '../public/notes.html'));
+        });
+
+        // If no matching route is found default to home
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../public/index.html'));
         });
 
         //updates the json file whenever a note is added or deleted
