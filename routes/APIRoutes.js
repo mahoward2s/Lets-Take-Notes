@@ -7,29 +7,38 @@ const storedNotes = require('../db/store');
 // API Routes
 
 module.exports = (app) => {
-    // API GET Requests
-    app.get('/api/notes', (req, res) => res.json(notes));
+    //sets note variable
+    fs.readFile('db/db.json', 'utf8', (err, data) => {
+        if (err) throw err;
+        var notes = JSON.parse(data);
 
-    // API POST Requests
-    app.post('/api/notes', (req, res) => {
-        let newNote = req.body;
-        notes.push(newNote);
-        updateDb();
-        return console.log('Successfully added new note: ' + newNote.title);
-    });
+        // API GET Requests
+        app.get('/api/notes', (req, res) => res.json(notes));
 
-    //Retrieves a note with a specific id
-    app.get('/api/notes/:id', (req, res) => res.json(notes[req.params.id]));
+        // API POST Requests
+        app.post('/api/notes', (req, res) => {
+            let newNote = req.body;
+            notes.push(newNote);
+            updateDb();
+            return console.log('Successfully added new note: ' + newNote.title);
+        });
 
+        //Retrieves a note with a specific id
+        app.get('/api/notes/:id', (req, res) => res.json(notes[req.params.id]));
 
-    // I added this below code so you could clear out the table while working with the functionality.
-    // Don"t worry about it!
+        // API delete request
+        app.delete('/api/notes/:id', (req, res) => {
+            notes.splice(req.params.id, 1);
+            updateDb();
+            return console.log('Successfully deleted note with id: ' + req.params.id);
+        });
 
-    app.post('/api/clear', (req, res) => {
-        // Empty out the arrays of data
-        tableData.length = 0;
-        waitListData.length = 0;
-
-        res.json({ ok: true });
+        //updates the json file whenever a note is added or deleted
+        function updateDb() {
+            fs.writeFile('db/db.json', JSON.stringify(notes, '\t'), err => {
+                if (err) throw err;
+                return true;
+            });
+        }
     });
 };
