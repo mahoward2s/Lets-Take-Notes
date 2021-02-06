@@ -16,7 +16,7 @@
 
 The following animation demonstrates the application functionality:
 
-![Lets-Take-Notes]()
+![Lets-Take-Notes](./public/assets/giph/app_demo.gif)
 
 ## Description
 
